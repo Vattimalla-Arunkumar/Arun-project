@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+
+import Navbar from './Components/Navbar/Navbar';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import {useRef} from 'react'
+import Products from './Components/Products/Products';
+import Orders from './Components/Orders/Orders';
 
 function App() {
+  const NavbarRef = useRef(null);
+
+  const navbarRefresh = () => {
+    NavbarRef.current.refresh();
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar ref={NavbarRef}/>
+        <Routes>
+          <Route path="/products" element={<Products navbarRefresh={navbarRefresh}/> } />
+          <Route path="/orders" element={<Orders navbarRefresh={navbarRefresh}/> } />
+        </Routes>
+      </div>
+
+    </Router>
   );
 }
 
